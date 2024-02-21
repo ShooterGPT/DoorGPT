@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Door Game Made by ChatGPT</title>
+  <title>Door Game Extension</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -34,28 +34,22 @@
     .button:hover {
       background-color: #ff1a1a; /* Darker red color */
     }
-    .hintButton {
-      background-color: #008CBA; /* Blue color */
-    }
-    .hintButton:hover {
-      background-color: #005f7f; /* Darker blue color */
-    }
   </style>
 </head>
 <body>
 
 <div class="container">
-  <h1 style="color: #333;">Welcome to the Door Game</h1>
-  <p style="color: #333;">Choose one of the five doors below:</p>
-  <button class="button" onclick="chooseDoor(1)" id="door1">Door 1</button>
-  <button class="button" onclick="chooseDoor(2)" id="door2">Door 2</button>
-  <button class="button" onclick="chooseDoor(3)" id="door3">Door 3</button>
-  <button class="button" onclick="chooseDoor(4)" id="door4">Door 4</button>
-  <button class="button" onclick="chooseDoor(5)" id="door5">Door 5</button>
-  <p id="result" style="color: #333;"></p>
-  <p id="score" style="color: #333;">Score: 0</p>
-  <h2 style="color: #333;">Items:</h2>
-  <button id="hint" class="button hintButton" onclick="findHint()">Find Hint (3 uses)</button>
+  <h1>Welcome to the Door Game</h1>
+  <p>Choose one of the five doors below:</p>
+  <button class="button" onclick="chooseDoor(1)">Door 1</button>
+  <button class="button" onclick="chooseDoor(2)">Door 2</button>
+  <button class="button" onclick="chooseDoor(3)">Door 3</button>
+  <button class="button" onclick="chooseDoor(4)">Door 4</button>
+  <button class="button" onclick="chooseDoor(5)">Door 5</button>
+  <p id="result"></p>
+  <p id="score">Score: 0</p>
+  <h2>Items:</h2>
+  <button class="button" onclick="findHint()">Find Hint (3 uses)</button>
   <button class="button" onclick="useMagnifyingGlass()">Magnifying Glass (2 uses)</button>
   <button class="button" onclick="useKnife()">Knife (1 use)</button>
   <button class="button" onclick="useBeer()">Beer (3 uses)</button>
@@ -96,6 +90,7 @@
       var items = ["Magnifying Glass", "Knife", "Beer", "Key", "Map", "Flashlight"];
       var randomItem = items[Math.floor(Math.random() * items.length)];
       alert("You found a " + randomItem + " behind Door " + selectedDoor + "!");
+      executeItemFunction(randomItem);
     }
     if (correctDoors.slice(0, 3).includes(selectedDoor)) {
       document.getElementById("result").textContent = "You passed! Choose another door.";
@@ -115,7 +110,6 @@
     if (hintCount > 0) {
       hintCount--;
       document.getElementById("hint").textContent = "Find Hint (" + hintCount + " uses left)";
-      // Add functionality for using hint here
       alert("You found a hint!");
     }
   }
@@ -123,7 +117,6 @@
   function useMagnifyingGlass() {
     if (magnifyingGlassCount > 0) {
       magnifyingGlassCount--;
-      // Add functionality for using magnifying glass here
       alert("Magnifying Glass used! You see a clue.");
     }
   }
@@ -131,15 +124,13 @@
   function useKnife() {
     if (knifeCount > 0) {
       knifeCount--;
-      // Add functionality for using knife here
-    alert("Knife used! You find a hidden passage.");
+      alert("Knife used! You find a hidden passage.");
     }
   }
 
   function useBeer() {
     if (beerCount > 0) {
       beerCount--;
-      // Add functionality for using beer here
       alert("Beer used! It gives you strength to push open a door.");
     }
   }
@@ -147,7 +138,6 @@
   function useKey() {
     if (keyCount > 0) {
       keyCount--;
-      // Add functionality for using key here
       alert("Key used! You unlock a door.");
     }
   }
@@ -155,7 +145,6 @@
   function useMap() {
     if (mapCount > 0) {
       mapCount--;
-      // Add functionality for using map here
       alert("Map used! You find a hidden room with treasure.");
     }
   }
@@ -163,26 +152,12 @@
   function useFlashlight() {
     if (flashlightCount > 0) {
       flashlightCount--;
-      // Add functionality for using flashlight here
       alert("Flashlight used! You find a way through the dark.");
     }
   }
 
   function restart() {
-    hintCount = 3;
-    magnifyingGlassCount = 2;
-    knifeCount = 1;
-    beerCount = 3;
-    keyCount = 1;
-    mapCount = 2;
-    flashlightCount = 1;
-    correctDoors = [];
-    alive = true;
-    score = 0;
-    document.getElementById("hint").textContent = "Find Hint (3 uses)";
-    document.getElementById("result").textContent = "";
-    document.getElementById("score").textContent = "Score: 0";
-    updateButtonsState();
+    location.reload(); // Refresh the page
   }
 
   function updateButtonsState() {
@@ -190,6 +165,10 @@
     for (var i = 0; i < buttons.length; i++) {
       buttons[i].disabled = !alive;
     }
+  }
+
+  function executeItemFunction(item) {
+    // Functionality for using items can be added here
   }
 </script>
 

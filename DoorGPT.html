@@ -23,7 +23,7 @@
       font-size: 16px;
       cursor: pointer;
       margin: 5px;
-      background-color: #4CAF50;
+      background-color: #ff4d4d; /* Red color */
       color: white;
       border: none;
       border-radius: 5px;
@@ -32,13 +32,13 @@
       display: inline-block;
     }
     .button:hover {
-      background-color: #45a049;
+      background-color: #ff1a1a; /* Darker red color */
     }
     .hintButton {
-      background-color: #008CBA;
+      background-color: #008CBA; /* Blue color */
     }
     .hintButton:hover {
-      background-color: #005f7f;
+      background-color: #005f7f; /* Darker blue color */
     }
   </style>
 </head>
@@ -47,31 +47,55 @@
 <div class="container">
   <h1 style="color: #333;">Welcome to the Door Game</h1>
   <p style="color: #333;">Choose one of the three doors below:</p>
-  <button class="button" onclick="chooseDoor(1)">Door 1</button>
-  <button class="button" onclick="chooseDoor(2)">Door 2</button>
-  <button class="button" onclick="chooseDoor(3)">Door 3</button>
+  <button class="button" onclick="chooseDoor(1)" id="door1">Door 1</button>
+  <button class="button" onclick="chooseDoor(2)" id="door2">Door 2</button>
+  <button class="button" onclick="chooseDoor(3)" id="door3">Door 3</button>
   <p id="result" style="color: #333;"></p>
+  <p id="score" style="color: #333;">Score: 0</p>
   <h2 style="color: #333;">Items:</h2>
   <button id="hint" class="button hintButton" onclick="findHint()">Find Hint</button>
+  <button class="button" onclick="useMagnifyingGlass()">Use Magnifying Glass</button>
+  <button class="button" onclick="useKnife()">Use Knife</button>
+  <button class="button" onclick="useBeer()">Use Beer</button>
   <button class="button" onclick="restart()">Restart</button>
 </div>
 
 <script>
   var hintCount = 0;
+  var alive = true;
+  var correctDoors = [1, 2, 3];
+  var score = 0;
+
+  function shuffle(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+    return array;
+  }
 
   function chooseDoor(selectedDoor) {
+    if (!alive) return;
+    correctDoors = shuffle(correctDoors);
     var randomNumber = Math.floor(Math.random() * 10); // Random number between 0 and 9
     if (randomNumber === 0) {
       document.getElementById("result").textContent = "Hint: Door " + selectedDoor + " is correct!";
     } else {
-      var correctDoors = [1, 2];
-      var correctDoor = correctDoors[Math.floor(Math.random() * correctDoors.length)];
-      if (selectedDoor === correctDoor || selectedDoor === 1) {
+      if (selectedDoor === correctDoors[0]) {
         document.getElementById("result").textContent = "You passed! Choose another door.";
+        score++;
+        document.getElementById("score").textContent = "Score: " + score;
       } else {
         document.getElementById("result").textContent = "Game over! You picked the wrong door.";
+        alive = false;
+        for (var i = 0; i < 5; i++) {
+          alert("FIRE IN THE HOLE!");
+        }
       }
     }
+    updateButtonsState();
   }
 
   function findHint() {
@@ -79,10 +103,39 @@
     document.getElementById("hint").textContent = "Find Hint (" + hintCount + ")";
   }
 
+  function useMagnifyingGlass() {
+    if (!alive) return;
+    // Add functionality for using magnifying glass here
+    alert("Magnifying Glass used!");
+  }
+
+  function useKnife() {
+    if (!alive) return;
+    // Add functionality for using knife here
+    alert("Knife used!");
+  }
+
+  function useBeer() {
+    if (!alive) return;
+    // Add functionality for using beer here
+    alert("Beer used!");
+  }
+
   function restart() {
     hintCount = 0;
     document.getElementById("hint").textContent = "Find Hint";
     document.getElementById("result").textContent = "";
+    document.getElementById("score").textContent = "Score: 0";
+    score = 0;
+    alive = true;
+    updateButtonsState();
+  }
+
+  function updateButtonsState() {
+    var buttons = document.getElementsByClassName("button");
+    for (var i = 0; i < buttons.length; i++) {
+      buttons[i].disabled = !alive;
+    }
   }
 </script>
 

@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f0f0f0;
+      background-color: #e6e6e6;
       margin: 0;
       padding: 0;
       display: flex;
@@ -22,24 +22,42 @@
       padding: 10px 20px;
       font-size: 16px;
       cursor: pointer;
+      margin: 5px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .button:hover {
+      background-color: #45a049;
+    }
+    .hintButton {
+      background-color: #008CBA;
+    }
+    .hintButton:hover {
+      background-color: #005f7f;
     }
   </style>
 </head>
 <body>
 
 <div class="container">
-  <h1>Welcome to the Door Game</h1>
-  <p>Choose one of the three doors below:</p>
+  <h1 style="color: #333;">Welcome to the Door Game</h1>
+  <p style="color: #333;">Choose one of the three doors below:</p>
   <button class="button" onclick="chooseDoor(1)">Door 1</button>
   <button class="button" onclick="chooseDoor(2)">Door 2</button>
   <button class="button" onclick="chooseDoor(3)">Door 3</button>
-  <p id="result"></p>
-  <h2>Items:</h2>
-  <button id="hint" class="button" onclick="useItem('hint')">Hint (1 use remaining)</button>
+  <p id="result" style="color: #333;"></p>
+  <h2 style="color: #333;">Items:</h2>
+  <button id="hint" class="button hintButton" onclick="findHint()">Find Hint</button>
+  <button class="button" onclick="restart()">Restart</button>
 </div>
 
 <script>
-  var hintUses = 1;
+  var hintCount = 0;
 
   function chooseDoor(selectedDoor) {
     var randomNumber = Math.floor(Math.random() * 10); // Random number between 0 and 9
@@ -56,22 +74,15 @@
     }
   }
 
-  function useItem(item) {
-    switch (item) {
-      case 'hint':
-        if (hintUses > 0) {
-          var correctDoors = [1, 2];
-          var hintDoor = correctDoors[Math.floor(Math.random() * correctDoors.length)];
-          document.getElementById("result").textContent = "Hint: One of the correct doors is Door " + hintDoor + ".";
-          hintUses--;
-          document.getElementById("hint").textContent = "Hint (" + hintUses + " use remaining)";
-        } else {
-          document.getElementById("result").textContent = "No more hints remaining.";
-        }
-        break;
-      default:
-        break;
-    }
+  function findHint() {
+    hintCount++;
+    document.getElementById("hint").textContent = "Find Hint (" + hintCount + ")";
+  }
+
+  function restart() {
+    hintCount = 0;
+    document.getElementById("hint").textContent = "Find Hint";
+    document.getElementById("result").textContent = "";
   }
 </script>
 

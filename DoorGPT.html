@@ -54,9 +54,12 @@
   <p id="score" style="color: #333;">Score: 0</p>
   <h2 style="color: #333;">Items:</h2>
   <button id="hint" class="button hintButton" onclick="findHint()">Find Hint</button>
-  <button class="button" onclick="useMagnifyingGlass()">Use Magnifying Glass</button>
-  <button class="button" onclick="useKnife()">Use Knife</button>
-  <button class="button" onclick="useBeer()">Use Beer</button>
+  <button class="button" onclick="useMagnifyingGlass()">Magnifying Glass</button>
+  <button class="button" onclick="useKnife()">Knife</button>
+  <button class="button" onclick="useBeer()">Beer</button>
+  <button class="button" onclick="useKey()">Key</button>
+  <button class="button" onclick="useMap()">Map</button>
+  <button class="button" onclick="useFlashlight()">Flashlight</button>
   <button class="button" onclick="restart()">Restart</button>
 </div>
 
@@ -106,19 +109,53 @@
   function useMagnifyingGlass() {
     if (!alive) return;
     // Add functionality for using magnifying glass here
-    alert("Magnifying Glass used!");
+    alert("Magnifying Glass used! You see a clue on Door 3.");
+    document.getElementById("result").textContent = "Hint: Door 3 is correct!";
   }
 
   function useKnife() {
     if (!alive) return;
     // Add functionality for using knife here
-    alert("Knife used!");
+    alert("Knife used! You find a hidden passage behind Door 2.");
+    document.getElementById("result").textContent = "You passed! Choose another door.";
+    score++;
+    document.getElementById("score").textContent = "Score: " + score;
   }
 
   function useBeer() {
     if (!alive) return;
     // Add functionality for using beer here
-    alert("Beer used!");
+    alert("Beer used! It gives you strength to push open Door 1.");
+    document.getElementById("result").textContent = "You passed! Choose another door.";
+    score++;
+    document.getElementById("score").textContent = "Score: " + score;
+  }
+
+  function useKey() {
+    if (!alive) return;
+    // Add functionality for using key here
+    alert("Key used! You unlock Door 2.");
+    document.getElementById("result").textContent = "You passed! Choose another door.";
+    score++;
+    document.getElementById("score").textContent = "Score: " + score;
+  }
+
+  function useMap() {
+    if (!alive) return;
+    // Add functionality for using map here
+    alert("Map used! You find a hidden room with treasure behind Door 3.");
+    document.getElementById("result").textContent = "You passed! Choose another door.";
+    score++;
+    document.getElementById("score").textContent = "Score: " + score;
+  }
+
+  function useFlashlight() {
+    if (!alive) return;
+    // Add functionality for using flashlight here
+    alert("Flashlight used! You find a key under Door 1.");
+    document.getElementById("result").textContent = "You passed! Choose another door.";
+    score++;
+    document.getElementById("score").textContent = "Score: " + score;
   }
 
   function restart() {
@@ -128,7 +165,15 @@
     document.getElementById("score").textContent = "Score: 0";
     score = 0;
     alive = true;
+    enableAllButtons();
     updateButtonsState();
+  }
+
+  function enableAllButtons() {
+    var buttons = document.getElementsByClassName("button");
+    for (var i = 0; i < buttons.length; i++) {
+      buttons[i].disabled = false;
+    }
   }
 
   function updateButtonsState() {
